@@ -105,12 +105,20 @@ public class Scrabble {
 			if(input.equals(".")) break;
 			//// Replace the following break statement with code
 			//// that completes the hand playing loop
-			if(isWordInDictionary(input)){
+			if(isWordInDictionary(input) && MyString.subsetOf(input, hand)){
+
 				score += wordScore(input);
-				System.out.println(input + " earned " + wordScore(input) + " points. Score: " + score + " points");
+				System.out.println(input + " earned " + wordScore(input) + " points. Score: " + score + " points\n");
 				hand = MyString.remove(hand, input);
+				//System.out.println("");
+
 			} else {
-				System.out.println("No such word in the dictionary. Try again.");
+				if (!MyString.subsetOf(input, hand)) {
+					System.out.println("The word is not exist in hand.");
+				} else if (!isWordInDictionary(input)) {
+					 System.out.println("No such word in the dictionary. Try again.");
+				}
+				
 			}
 			
 		}
@@ -136,7 +144,11 @@ public class Scrabble {
 			// the user until the user enter the ENTER character.
 			String input = in.readString();
 			if(input.equals("e")) break;
-			if(input.equals("n")) playHand(createHand());
+			if(input.equals("n")){
+				String hand = createHand();
+				HAND_SIZE = hand.length(); 
+				playHand(hand);
+			}
 			//// Replace the following break statement with code
 			//// that completes the game playing loop
 		}
