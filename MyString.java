@@ -7,9 +7,15 @@ public class MyString {
         System.out.println(countChar(hello, 'h'));
         System.out.println(countChar(hello, 'l'));
         System.out.println(countChar(hello, 'z'));
-        System.out.println(spacedString(hello));
+        System.out.println(countChar("", 'z'));
+        System.out.println(remove("committee","meet"));
+        System.out.println(insertRandomly('s',"cat"));
         //// Put your other tests here.
-    }
+        /*System.out.println(subsetOf("sap", "space"));
+        System.out.println(subsetOf("spa", "space"));
+        System.out.println(subsetOf("pass", "space"));
+        System.out.println(subsetOf("c", "space"));*/
+    }   
 
     /**
      * Returns the number of times the given character appears in the given string.
@@ -20,8 +26,11 @@ public class MyString {
      * @return the number of times c appears in str
      */
     public static int countChar(String str, char ch) {
-        //// Replace the following statement with your code
-        return 0;
+        int count = 0;
+        for(int i = 0; i < str.length(); i++){
+            if(str.charAt(i) == ch) count += 1;
+        }
+        return count;
     }
 
     /** Returns true if str1 is a subset string str2, false otherwise
@@ -36,8 +45,31 @@ public class MyString {
      * @return true is str1 is a subset of str2, false otherwise
      */
     public static boolean subsetOf(String str1, String str2) {
-         //// Replace the following statement with your code
-        return false;
+        if (str1 == "") return true;
+        boolean check = false;
+
+        for(int i = 0; i < str1.length(); i++){
+            char c = str1.charAt(i);
+            
+            for(int j = 0; j < str2.length(); j++){
+
+                if(c == str2.charAt(j)){
+
+                    check = true;
+                    if(j == 0) str2 = str2.substring(1, str2.length()); //the char in location 0
+                    if(j == str2.length() - 1) str2 = str2.substring(0, j); //the char is in the end
+                    if(j > 0 && j < str2.length() - 1) str2 = str2.substring(0, j) + str2.substring(j + 1); //the char is in the middle
+                        
+                    break;
+                }
+            }
+
+            if(!check) return false;
+            check = false;
+
+        }
+
+        return true;
     }
 
     /** Returns a string which is the same as the given string, with a space
@@ -49,8 +81,12 @@ public class MyString {
      * @return a string consisting of the characters of str, separated by spaces.
      */
     public static String spacedString(String str) {
-        //// Replace the following statement with your code
-        return null;
+        String s = "";
+        for(int i = 0; i < str.length(); i++){
+            if(i == str.length() - 1) s += str.charAt(i);
+            else s += str.charAt(i) + " ";
+        }
+        return s;
     }
   
     /**
@@ -64,22 +100,43 @@ public class MyString {
      * @return a randomly generated string, consisting of 'n' lowercase letters
      */
     public static String randomStringOfLetters(int n) {
-        //// Replace the following statement with your code
-        return null;
+        String s = "";
+        while(n > 0){
+            s += (char) (97 + (int)(Math.random() * ((122 - 97) + 1)));
+            n -= 1;
+        }
+        return s;
     }
 
     /**
      * Returns a string consisting of the string str1, minus all the characters in the
      * string str2. Assumes (without checking) that str2 is a subset of str1.
-     * Example: remove("meet","committee") returns "comit" 
+     * Example: remove("committee","meet") returns "comit" 
      * 
      * @param str1 - a string
      * @param str2 - a string
      * @return a string consisting of str1 minus all the characters of str2
      */
-    public static String remove(String str1, String str2) {
-       //// Replace the following statement with your code
-        return null;
+    public static String remove(String str1, String str2) { // remove the letters of str2 from str1 and return fixed str1
+        if (str2 == "") return str1;
+
+        for(int i = 0; i < str2.length(); i++){
+            char c = str2.charAt(i);
+            
+            for(int j = 0; j < str1.length(); j++){
+
+                if(c == str1.charAt(j)){
+
+                    if(j == 0) str1 = str1.substring(1, str1.length()); //the char in location 0
+                    if(j == str1.length() - 1) str1 = str1.substring(0, j); //the char is in the end
+                    if(j > 0 && j < str1.length() - 1) str1 = str1.substring(0, j) + str1.substring(j + 1); //the char is in the middle
+                        
+                    break;
+                }
+            }
+        }
+
+        return str1;
     }
 
     /**
